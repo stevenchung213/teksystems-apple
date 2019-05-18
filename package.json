@@ -7,18 +7,24 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --config webpack.dev.js --progress --colors",
     "build": "webpack --config webpack.prod.js --progress --colors",
-    "server": "node ./server/index.js"
+    "server": "nodemon ./server/index.js"
   },
   "author": "steven chung",
   "license": "MIT",
   "homepage": "https://github.com/stevenchung213/teksystems-apple.git",
   "dependencies": {
     "@babel/runtime": "^7.4.4",
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
+    "axios": "^0.18.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "helmet": "^3.18.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-responsive": "^6.1.2",
+    "react-router-dom": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
