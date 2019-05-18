@@ -1,140 +1,64 @@
-import React, { useState } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import HomeIcon from '@material-ui/icons/HomeTwoTone';
-import SearchIcon from '@material-ui/icons/SearchTwoTone';
-import MenuIcon from '@material-ui/icons/Menu';
-import DeleteIcon from '@material-ui/icons/DeleteTwoTone';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-
-const drawerWidth = 200;
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
-  root: {
+  card: {
     display: 'flex',
+    width: 350,
+    height: 150,
+    margin: ' 0.5vh auto'
   },
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
-  appBar: {
-    marginLeft: drawerWidth,
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
-  },
-  menuButton: {
-    marginRight: 20,
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
-  },
-  toolbar: theme.mixins.toolbar,
-  drawerPaper: {
-    width: drawerWidth,
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: 230
   },
   content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    flex: '1 0 auto',
   },
+  cover: {
+    margin: 'auto',
+    marginRight: 5,
+    width: 120,
+    height: 120
+  }
 });
 
-const ResponsiveDrawer = (props) => {
-  
-  const [mobileOpen, handleDrawerToggle] = useState(false);
-  
-  const { classes } = props;
-  
-  const drawer = (
-    <div>
-      <div className={classes.toolbar}/>
-      <Divider/>
-      <List>
-        <ListItem button key={'nav-home'}>
-          <ListItemIcon>
-            <HomeIcon/>
-          </ListItemIcon>
-          <ListItemText primary={'Home'}/>
-        </ListItem>
-      </List>
-      <Divider/>
-      <List>
-        <ListItem button key={'nav-search'}>
-          <ListItemIcon>
-            <SearchIcon/>
-          </ListItemIcon>
-          <ListItemText primary={'Search'}/>
-        </ListItem>
-      </List>
-      <Divider/>
-      <List>
-        <ListItem button key={'nav-trash'}>
-          <ListItemIcon>
-            <DeleteIcon/>
-          </ListItemIcon>
-          <ListItemText primary={'Delete'}/>
-        </ListItem>
-      </List>
-      <Divider/>
-    </div>
-  );
+const MediaCard = (props) => {
+  const { classes, theme, media } = props;
   
   return (
-    <div className={classes.root}>
-      <CssBaseline/>
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={() => handleDrawerToggle(!mobileOpen)}
-            className={classes.menuButton}>
-            <MenuIcon/>
-          </IconButton>
-          <Typography variant="h6" color="inherit" noWrap>
-            iTunes Catalog
+    <Card className={classes.card}>
+      <div className={classes.details}>
+        <CardContent className={classes.content}>
+          <Typography variant="subtitle1">
+            {media.track}
           </Typography>
-        </Toolbar>
-      </AppBar>
-      <nav className={classes.drawer}>
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={props.container}
-            variant="temporary"
-            anchor={'left'}
-            open={mobileOpen}
-            onClose={() => handleDrawerToggle(!mobileOpen)}
-            classes={{
-              paper: classes.drawerPaper,
-            }}>
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open>
-            {drawer}
-          </Drawer>
-        </Hidden>
-      </nav>
-    </div>
+          <Typography variant="subtitle2" color="textSecondary">
+            {media.name}
+          </Typography>
+          <Typography color="textSecondary">
+            <i>{media.genre}</i>
+          </Typography>
+          <Typography style={{ cursor: 'pointer' }}>
+            <a target="_blank" rel="noopener noreferrer"
+               href={media.url}>
+              Link
+            </a>
+          </Typography>
+        </CardContent>
+      </div>
+      <CardMedia
+        className={classes.cover}
+        image={media.artwork}
+        title="Live from space album cover"
+      />
+    </Card>
   );
 };
 
-export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);
+export default withStyles(styles, { withTheme: true })(MediaCard);

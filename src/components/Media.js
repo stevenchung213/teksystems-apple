@@ -1,94 +1,64 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
+  card: {
+    display: 'flex',
+    width: 350,
+    height: 150,
+    margin: ' 0.5vh auto'
   },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    margin: '1vh auto',
-    width: 300,
-    height: 150
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: 230
   },
-  image: {
-    width: 128,
-    height: 128,
+  content: {
+    flex: '1 0 auto',
   },
-  img: {
+  cover: {
     margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-  },
+    marginRight: 5,
+    width: 120,
+    height: 120
+  }
 });
 
 const Media = (props) => {
-  const { classes, media } = props;
+  const { classes, theme, media } = props;
+  
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Grid container spacing={16}>
-          <Grid item>
-            <img className={classes.img} alt={media.name} src={media.artwork}/>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={16}>
-              <Grid item xs>
-                <Typography gutterBottom variant="subtitle1">
-                  {media.name}
-                </Typography>
-                <Typography gutterBottom>
-                  <i>{media.track}</i>
-                </Typography>
-                <Typography color="textSecondary">
-                  {media.genre}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <div style={{display: 'flex'}}>
-                <Typography style={{ cursor: 'pointer' }}>
-                  <a target="_blank" rel="noopener noreferrer"
-                     href={media.url}>
-                    Link
-                  </a>
-                </Typography>
-                </div>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper>
-    </div>
+    <Card className={classes.card}>
+      <div className={classes.details}>
+        <CardContent className={classes.content}>
+          <Typography variant="subtitle2" color="textSecondary">
+            {media.name}
+          </Typography>
+          <Typography variant="subtitle1" style={{ height: 56, overflow: 'hidden' }}>
+            {media.track}
+          </Typography>
+          <Typography color="textSecondary">
+            <i>{media.genre}</i>
+          </Typography>
+          <Typography style={{ cursor: 'pointer' }}>
+            <a target="_blank" rel="noopener noreferrer"
+               href={media.url}>
+              Link
+            </a>
+          </Typography>
+        </CardContent>
+      </div>
+      <CardMedia
+        className={classes.cover}
+        image={media.artwork}
+        title="Live from space album cover"
+      />
+    </Card>
   );
 };
 
-export default withStyles(styles)(Media);
-
-// {
-//   data[kind].map((media, i) =>
-//     <div className={`media-container`} key={i} style={mediaContainer}>
-//       <div>
-//         <img src={media.artwork} alt={`${media.name}-${i}`}/>
-//       </div>
-//       <div>
-//         <div>
-//           {media.name}
-//         </div>
-//         <div>
-//           {media.track}
-//         </div>
-//         <div>
-//           {media.genre}
-//         </div>
-//         <a target="_blank" rel="noopener noreferrer"
-//            href={media.url}>
-//           Link
-//         </a>
-//       </div>
-//     </div>
-//   )
-// }
+export default withStyles(styles, { withTheme: true })(Media);

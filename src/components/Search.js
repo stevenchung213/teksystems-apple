@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { useInput } from '../hooks/';
 import Media from './Media';
 
@@ -10,19 +11,31 @@ const Search = ({ view }) => {
   
   const api = 'http://localhost:3000/api/v1/itunes/search';
   const { value, props, reset } = useInput('');
-  const [data, setData] = useState(undefined);
+  const [data, setData] = useState({
+    data: undefined,
+    loading: false,
+    done: false
+  });
   const [kinds, setKinds] = useState(undefined);
   
   const submit = (e) => {
     e.preventDefault();
     const url = `${api}/${value}`;
-    
+    setData({
+      data: undefined,
+      loading: true,
+      done: false
+    });
     fetch(url, { method: 'POST' })
       .then(resp => resp.json())
       .then(result => {
         const kinds = Object.keys(result);
         setKinds(kinds);
-        setData(result);
+        setData({
+          data: result,
+          loading: false,
+          complete: true
+        });
       })
       .catch(err => console.log(err));
     
@@ -87,28 +100,29 @@ const Search = ({ view }) => {
       <Divider/>
       <div id={`results-container`}>
         {
-          data && kinds &&
-          <div id={`kinds-container`}>
-            {
-              kinds.map(kind =>
-                <div id={`section-container`} key={kind} style={sections}>
-                  <Typography variant="h5" align="center"
-                              color="secondary" style={sectionTitle}>
-                    {`${kind[0].toUpperCase()}${kind.slice(1)}s`}
-                  </Typography>
-                  <Divider/>
-                  <div id={`${kind}-container`} style={kindsContainer}>
-                    {
-                      data[kind].map((media, i) => (
-                        <Media media={media} key={i}/>
-                      ))
-                    }
+          data.loading ? <LinearProgress/> :
+            data.complete &&
+            <div id={`kinds-container`}>
+              {
+                kinds.map(kind =>
+                  <div id={`section-container`} key={kind} style={sections}>
+                    <Typography variant="h5" align="center"
+                                color="secondary" style={sectionTitle}>
+                      {`${kind[0].toUpperCase()}${kind.slice(1)}s`}
+                    </Typography>
+                    <Divider/>
+                    <div id={`${kind}-container`} style={kindsContainer}>
+                      {
+                        data.data[kind].map((media, i) => (
+                          <Media media={media} key={i}/>
+                        ))
+                      }
+                    </div>
+                    <Divider/>
                   </div>
-                  <Divider/>
-                </div>
-              )
-            }
-          </div>
+                )
+              }
+            </div>
         }
       </div>
     </div>
