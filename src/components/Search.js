@@ -12,7 +12,7 @@ const MediaTabs = Loadable({
 });
 
 const Search = ({ view, addData, removeData }) => {
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 80;
   const api = `http://localhost:${port}/api/v1/itunes/search`;
   
   const [value, setValue] = useState('');
