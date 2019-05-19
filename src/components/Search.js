@@ -12,8 +12,8 @@ const MediaTabs = Loadable({
 });
 
 const Search = ({ view, addData, removeData }) => {
-  const port = process.env.PORT || 80;
-  const api = `http://localhost:${port}/api/v1/itunes/search`;
+  
+  const api = `https://itunes-catalog.herokuapp.com/api/v1/itunes/search`;
   
   const [value, setValue] = useState('');
   const [data, setData] = useState({
