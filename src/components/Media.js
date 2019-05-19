@@ -4,6 +4,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import ButtonBase from "@material-ui/core/ButtonBase";
+import HeartIcon from '@material-ui/icons/FavoriteBorderOutlined';
 
 const styles = theme => ({
   card: {
@@ -29,7 +31,22 @@ const styles = theme => ({
 });
 
 const Media = (props) => {
-  const { classes, theme, media } = props;
+  const { classes, media, saved } = props;
+  
+  const saveToLocal = (media) => {
+    if (!localStorage.getItem('itunes')) {
+      const newStorage = [];
+      newStorage.push(media);
+      localStorage.setItem('itunes', JSON.stringify(newStorage));
+    } else {
+      const existingStorage = localStorage.getItem('itunes');
+      if (!existingStorage.includes(media.url)) {
+        const parsedStorage = JSON.parse(existingStorage);
+        parsedStorage.push(media);
+        localStorage.setItem('itunes', JSON.stringify(parsedStorage));
+      }
+    }
+  };
   
   return (
     <Card className={classes.card}>
@@ -44,11 +61,15 @@ const Media = (props) => {
           <Typography color="textSecondary">
             <i>{media.genre}</i>
           </Typography>
-          <Typography style={{ cursor: 'pointer' }}>
+          <Typography>
             <a target="_blank" rel="noopener noreferrer"
-               href={media.url}>
+               href={media.url} style={{ width: 25 }}>
               Link
             </a>
+            <ButtonBase title={`Add to favorites`} onClick={() => saveToLocal(media)}
+                        style={{ float: 'right' }}>
+              <HeartIcon style={{ zIndex: 1 }}/>
+            </ButtonBase>
           </Typography>
         </CardContent>
       </div>

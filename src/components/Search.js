@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { useInput } from '../hooks/';
 import MediaTabs from './MediaTabs';
-import Media from './Media';
 
 const Search = ({ view }) => {
   
   const api = 'http://localhost:3000/api/v1/itunes/search';
-  const { value, props, reset } = useInput('');
+
+  const [value, setValue] = useState('');
   const [data, setData] = useState({
     data: undefined,
     loading: false,
@@ -40,27 +37,25 @@ const Search = ({ view }) => {
       })
       .catch(err => console.log(err));
     
-    reset();
-    console.log(data);
-  };
-  
-  const saveToLocal = () => {
-    localStorage
+    setValue('');
   };
   
   const searchContainer = {
       display: "flex",
       flexDirection: 'row',
       justifyContent: 'center',
-      paddingTop: '5vh'
+      position: 'sticky',
+      top: 64,
+      backgroundColor: 'rgba(245, 245, 245, 1)',
+      zIndex: 5
     },
     inputContainer = {
       display: 'flex',
-      width: '45vw',
+      width: '50vw',
       flexDirection: 'row'
     },
     input = {
-      width: '35vw'
+      width: '40vw'
     },
     buttonBox = {
       width: '10vw'
@@ -69,19 +64,8 @@ const Search = ({ view }) => {
       marginTop: 28,
       borderRadius: 20,
       marginLeft: 5
-    },
-    kindsContainer = {
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap'
-    },
-    sections = {
-      marginTop: '2vh'
-    },
-    sectionTitle = {
-      paddingBottom: '2vh'
     };
-  
+ 
   return (
     <div id={`search-wrapper`} style={view}>
       <div id={`search-container`} style={searchContainer}>
@@ -89,7 +73,8 @@ const Search = ({ view }) => {
           <div id={`input-box`} style={input}>
             <TextField required id="standard-search"
                        label="search media" type="search"
-                       margin="normal" {...props}
+                       margin="normal" value={value}
+                       onChange={e => setValue(e.target.value)}
                        autoFocus fullWidth/>
           </div>
           <div id={`input-button`} style={buttonBox}>
@@ -98,32 +83,10 @@ const Search = ({ view }) => {
           </div>
         </form>
       </div>
-      <Divider/>
       <div id={`results-container`}>
         {
           data.loading ? <LinearProgress/> :
-            data.complete &&
-            <div id={`kinds-container`}>
-              <MediaTabs kinds={kinds} data={data.data}/>
-              {/*{*/}
-              {/*  kinds.map(kind =>*/}
-              {/*    <div id={`section-container`} key={kind} style={sections}>*/}
-              {/*      <Typography variant="h5" align="center"*/}
-              {/*                  color="secondary" style={sectionTitle}>*/}
-              {/*        {`${kind[0].toUpperCase()}${kind.slice(1)}s`}*/}
-              {/*      </Typography>*/}
-              {/*      <Divider/>*/}
-              {/*      <div id={`${kind}-container`} style={kindsContainer}>*/}
-              {/*        {*/}
-              {/*          data.data[kind].map((media, i) =>*/}
-              {/*            <Media media={media} key={i}/>)*/}
-              {/*        }*/}
-              {/*      </div>*/}
-              {/*      <Divider/>*/}
-              {/*    </div>*/}
-              {/*  )*/}
-              {/*}*/}
-            </div>
+            data.complete && <MediaTabs kinds={kinds} data={data.data}/>
         }
       </div>
     </div>
