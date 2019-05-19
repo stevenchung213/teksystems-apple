@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useInput } from '../hooks/';
+import MediaTabs from './MediaTabs';
 import Media from './Media';
 
 const Search = ({ view }) => {
@@ -43,9 +44,9 @@ const Search = ({ view }) => {
     console.log(data);
   };
   
-  // const saveToLocal = () => {
-  //   localStorage
-  // };
+  const saveToLocal = () => {
+    localStorage
+  };
   
   const searchContainer = {
       display: "flex",
@@ -103,25 +104,25 @@ const Search = ({ view }) => {
           data.loading ? <LinearProgress/> :
             data.complete &&
             <div id={`kinds-container`}>
-              {
-                kinds.map(kind =>
-                  <div id={`section-container`} key={kind} style={sections}>
-                    <Typography variant="h5" align="center"
-                                color="secondary" style={sectionTitle}>
-                      {`${kind[0].toUpperCase()}${kind.slice(1)}s`}
-                    </Typography>
-                    <Divider/>
-                    <div id={`${kind}-container`} style={kindsContainer}>
-                      {
-                        data.data[kind].map((media, i) => (
-                          <Media media={media} key={i}/>
-                        ))
-                      }
-                    </div>
-                    <Divider/>
-                  </div>
-                )
-              }
+              <MediaTabs kinds={kinds} data={data.data}/>
+              {/*{*/}
+              {/*  kinds.map(kind =>*/}
+              {/*    <div id={`section-container`} key={kind} style={sections}>*/}
+              {/*      <Typography variant="h5" align="center"*/}
+              {/*                  color="secondary" style={sectionTitle}>*/}
+              {/*        {`${kind[0].toUpperCase()}${kind.slice(1)}s`}*/}
+              {/*      </Typography>*/}
+              {/*      <Divider/>*/}
+              {/*      <div id={`${kind}-container`} style={kindsContainer}>*/}
+              {/*        {*/}
+              {/*          data.data[kind].map((media, i) =>*/}
+              {/*            <Media media={media} key={i}/>)*/}
+              {/*        }*/}
+              {/*      </div>*/}
+              {/*      <Divider/>*/}
+              {/*    </div>*/}
+              {/*  )*/}
+              {/*}*/}
             </div>
         }
       </div>
