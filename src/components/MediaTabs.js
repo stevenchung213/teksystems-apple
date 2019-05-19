@@ -46,7 +46,7 @@ class MediaTabs extends React.Component {
       },
       homeMobileTabs = {
         position: 'sticky',
-        top: 55,
+        top: 48,
         marginBottom: 5,
         zIndex: 10
       },
@@ -58,7 +58,7 @@ class MediaTabs extends React.Component {
       },
       mobileTabs = {
         position: 'sticky',
-        top: 55,
+        top: 120,
         marginBottom: 5,
         zIndex: 10
       },

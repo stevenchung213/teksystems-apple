@@ -6,10 +6,12 @@ const Home = ({ view }) => {
   
   const [localData, setData] = useState(undefined);
   const [kinds, setKinds] = useState(undefined);
-  
+
   useEffect(() => {
-    const storedData = localStorage.getItem('itunes');
-    if (storedData && Object.keys(JSON.parse(storedData)) > 0) {
+
+    const storedData = JSON.parse(localStorage.getItem('itunes'));
+
+    if (storedData && Object.keys(storedData).length > 0) {
       const parsedData = JSON.parse(localStorage.getItem('itunes'));
       const localKinds = Object.keys(parsedData);
       setData(parsedData);
@@ -32,7 +34,7 @@ const Home = ({ view }) => {
     <div id={`home-wrapper`} style={view}>
       <div id={`home-container`} style={homeContainer}>
         {
-          localData === undefined ?
+          !localData ?
             <Typography variant="h5" style={{marginTop: 30}} color="textSecondary">
               You have no saved media...
             </Typography>

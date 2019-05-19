@@ -46,7 +46,7 @@ const Search = ({ view }) => {
       flexDirection: 'row',
       justifyContent: 'center',
       position: 'sticky',
-      top: 55,
+      top: 48,
       backgroundColor: 'rgba(245, 245, 245, 1)',
       zIndex: 20
     },
@@ -84,7 +84,7 @@ const Search = ({ view }) => {
                      label="search media" type="search"
                      margin="normal" value={value}
                      onChange={e => setValue(e.target.value)}
-                     autoFocus fullWidth/>
+                     fullWidth/>
         </div>
         <div id={`input-button`} style={buttonBox}>
           <Button variant="contained" color="secondary"

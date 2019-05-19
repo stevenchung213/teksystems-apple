@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -32,9 +32,10 @@ const styles = theme => ({
 });
 
 const Media = (props) => {
+  
   const { classes, media, kind, saved } = props;
   
-  const saveToLocal = media => {
+  const saveToLocal = (media, kind) => {
     
     if (!localStorage.getItem('itunes')) {
       const newStorage = { [kind]: [] };
@@ -59,19 +60,17 @@ const Media = (props) => {
   const deleteLocal = (media, kind) => {
     
     const localData = localStorage.getItem('itunes');
-    console.log(localData)
     const parsedData = JSON.parse(localData);
-    console.log(parsedData)
-    console.log(media, kind)
     const filtered = parsedData[kind].filter(localMedia => localMedia.url !== media.url);
-    console.log(filtered)
     parsedData[kind] = filtered;
     for (let key in parsedData) {
       if (!parsedData[key].length) {
         delete parsedData[key]
       }
     }
-    console.log(parsedData)
+    if (Object.keys(parsedData).length === 0) {
+      localStorage.clear();
+    }
     localStorage.setItem('itunes', JSON.stringify(parsedData));
   };
   
@@ -79,7 +78,8 @@ const Media = (props) => {
     <Card className={classes.card}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Typography variant="subtitle2" color="textSecondary">
+          <Typography variant="subtitle2" color="textSecondary"
+                      style={{ height: 23, overflow: 'hidden' }}>
             {media.name}
           </Typography>
           <Typography variant="subtitle1" style={{ height: 56, overflow: 'hidden' }}>
@@ -98,7 +98,7 @@ const Media = (props) => {
                 saved ?
                   <DeleteForeverOutlinedIcon style={{ zIndex: 1 }} onClick={() => deleteLocal(media, kind)}/>
                   :
-                  <HeartIcon style={{ zIndex: 1 }} onClick={() => saveToLocal(media)}/>
+                  <HeartIcon style={{ zIndex: 1 }} onClick={() => saveToLocal(media, kind)}/>
               }
             </ButtonBase>
           </Typography>
