@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from "@material-ui/core/ButtonBase";
 import HeartIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 const styles = theme => ({
   card: {
@@ -31,9 +32,10 @@ const styles = theme => ({
 });
 
 const Media = (props) => {
-  const { classes, media, kind } = props;
+  const { classes, media, kind, saved } = props;
   
-  const saveToLocal = (media) => {
+  const saveToLocal = media => {
+    
     if (!localStorage.getItem('itunes')) {
       const newStorage = { [kind]: [] };
       newStorage[kind].push(media);
@@ -42,10 +44,35 @@ const Media = (props) => {
       const existingStorage = localStorage.getItem('itunes');
       if (!existingStorage.includes(media.url)) {
         const parsedStorage = JSON.parse(existingStorage);
-        parsedStorage[kind].push(media);
-        localStorage.setItem('itunes', JSON.stringify(parsedStorage));
+        if (parsedStorage[kind]) {
+          parsedStorage[kind].push(media);
+          localStorage.setItem('itunes', JSON.stringify(parsedStorage));
+        } else {
+          parsedStorage[kind] = [];
+          parsedStorage[kind].push(media);
+          localStorage.setItem('itunes', JSON.stringify(parsedStorage));
+        }
       }
     }
+  };
+  
+  const deleteLocal = (media, kind) => {
+    
+    const localData = localStorage.getItem('itunes');
+    console.log(localData)
+    const parsedData = JSON.parse(localData);
+    console.log(parsedData)
+    console.log(media, kind)
+    const filtered = parsedData[kind].filter(localMedia => localMedia.url !== media.url);
+    console.log(filtered)
+    parsedData[kind] = filtered;
+    for (let key in parsedData) {
+      if (!parsedData[key].length) {
+        delete parsedData[key]
+      }
+    }
+    console.log(parsedData)
+    localStorage.setItem('itunes', JSON.stringify(parsedData));
   };
   
   return (
@@ -66,9 +93,13 @@ const Media = (props) => {
                href={media.url} style={{ width: 25 }}>
               Link
             </a>
-            <ButtonBase title={`Add to favorites`} onClick={() => saveToLocal(media)}
-                        style={{ float: 'right' }}>
-              <HeartIcon style={{ zIndex: 1 }}/>
+            <ButtonBase title={`Add to favorites`} style={{ float: 'right' }}>
+              {
+                saved ?
+                  <DeleteForeverOutlinedIcon style={{ zIndex: 1 }} onClick={() => deleteLocal(media, kind)}/>
+                  :
+                  <HeartIcon style={{ zIndex: 1 }} onClick={() => saveToLocal(media)}/>
+              }
             </ButtonBase>
           </Typography>
         </CardContent>

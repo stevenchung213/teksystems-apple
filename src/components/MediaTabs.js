@@ -42,7 +42,7 @@ class MediaTabs extends React.Component {
         position: 'sticky',
         top: 64,
         marginBottom: 5,
-        zIndex: 10
+        zIndex: 10,
       },
       homeMobileTabs = {
         position: 'sticky',
@@ -78,7 +78,8 @@ class MediaTabs extends React.Component {
       </Responsive>
       :
       <Responsive maxWidth={599}>
-        {matches => matches ?
+        {
+          matches => matches ?
           SearchNav(mobileTabs)
           :
           SearchNav(desktopTabs)
@@ -91,7 +92,7 @@ class MediaTabs extends React.Component {
         <div id={`tab-container`} style={kindsContainer}>
           {
             data[kinds[value]].map((media, i) =>
-              <Media media={media} key={`${media}-${i}`} kind={kinds[value]}/>)
+              <Media media={media} key={`${media}-${i}`} kind={kinds[value]} saved={home}/>)
           }
         </div>
       </div>

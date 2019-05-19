@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Responsive from 'react-responsive';
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -7,7 +8,7 @@ import MediaTabs from './MediaTabs';
 const Search = ({ view }) => {
   
   const api = 'http://localhost:3000/api/v1/itunes/search';
-
+  
   const [value, setValue] = useState('');
   const [data, setData] = useState({
     data: undefined,
@@ -40,7 +41,16 @@ const Search = ({ view }) => {
     setValue('');
   };
   
-  const searchContainer = {
+  const mobileSearchContainer = {
+      display: "flex",
+      flexDirection: 'row',
+      justifyContent: 'center',
+      position: 'sticky',
+      top: 55,
+      backgroundColor: 'rgba(245, 245, 245, 1)',
+      zIndex: 20
+    },
+    searchContainer = {
       display: "flex",
       flexDirection: 'row',
       justifyContent: 'center',
@@ -65,28 +75,43 @@ const Search = ({ view }) => {
       borderRadius: 20,
       marginLeft: 5
     };
- 
+  
+  const View = (style) =>
+    <div id={`search-container`} style={style}>
+      <form onSubmit={submit} style={inputContainer}>
+        <div id={`input-box`} style={input}>
+          <TextField required id="standard-search"
+                     label="search media" type="search"
+                     margin="normal" value={value}
+                     onChange={e => setValue(e.target.value)}
+                     autoFocus fullWidth/>
+        </div>
+        <div id={`input-button`} style={buttonBox}>
+          <Button variant="contained" color="secondary"
+                  type="submit" style={button}>
+            Search
+          </Button>
+        </div>
+      </form>
+    </div>;
+  
   return (
     <div id={`search-wrapper`} style={view}>
-      <div id={`search-container`} style={searchContainer}>
-        <form onSubmit={submit} style={inputContainer}>
-          <div id={`input-box`} style={input}>
-            <TextField required id="standard-search"
-                       label="search media" type="search"
-                       margin="normal" value={value}
-                       onChange={e => setValue(e.target.value)}
-                       autoFocus fullWidth/>
-          </div>
-          <div id={`input-button`} style={buttonBox}>
-            <Button variant="contained" color="secondary"
-                    type="submit" style={button}>search</Button>
-          </div>
-        </form>
-      </div>
+      <Responsive maxWidth={599}>
+        {
+          matches => matches ?
+            View(mobileSearchContainer)
+            :
+            View(searchContainer)
+        }
+      </Responsive>
       <div id={`results-container`}>
         {
-          data.loading ? <LinearProgress/> :
-            data.complete && <MediaTabs kinds={kinds} data={data.data} home={false}/>
+          data.loading ?
+            <LinearProgress/>
+            :
+            data.complete &&
+            <MediaTabs kinds={kinds} data={data.data} home={false} centered/>
         }
       </div>
     </div>

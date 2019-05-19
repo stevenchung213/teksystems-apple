@@ -8,16 +8,10 @@ import Search from './Search';
 
 const Main = () => {
   
-  const onLoad = () => {
-    const savedData = JSON.parse(localStorage.getItem('itunes'));
-    console.log(savedData);
-    
-  };
-  
   const mobile = {
       height: 'auto',
       width: 'auto',
-      marginTop: 55,
+      marginTop: 48,
       display: 'flex',
       flexDirection: 'column'
     },

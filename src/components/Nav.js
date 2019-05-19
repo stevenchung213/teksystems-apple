@@ -57,6 +57,10 @@ const Nav = (props) => {
   
   const [mobileOpen, handleDrawerToggle] = useState(false);
   
+  const clearStorage = () => {
+    localStorage.clear();
+  };
+  
   const { classes } = props;
   
   const drawer = (
@@ -69,11 +73,10 @@ const Nav = (props) => {
             <ListItemIcon>
               <HomeIcon/>
             </ListItemIcon>
-            <ListItemText primary={'Home'}/>
+            <ListItemText primary={'My Media'}/>
           </ListItem>
         </Link>
       </List>
-      <Divider/>
       <List>
         <Link component={RouterLink} to="/search">
           <ListItem button key={'nav-search'}>
@@ -86,14 +89,13 @@ const Nav = (props) => {
       </List>
       <Divider/>
       <List>
-        <ListItem button key={'nav-trash'}>
+        <ListItem button key={'empty-local'} onClick={clearStorage}>
           <ListItemIcon>
             <DeleteIcon/>
           </ListItemIcon>
-          <ListItemText primary={'Delete'}/>
+          <ListItemText primary={'Delete All'}/>
         </ListItem>
       </List>
-      <Divider/>
     </div>
   );
   
@@ -101,7 +103,7 @@ const Nav = (props) => {
     <div className={classes.root}>
       <CssBaseline/>
       <AppBar position="fixed" color="default"
-              className={classes.appBar} style={{zIndex: 100}}>
+              className={classes.appBar} style={{ boxShadow: 'none' }}>
         <Toolbar>
           <IconButton
             color="inherit"
