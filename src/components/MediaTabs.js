@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Typography from "@material-ui/core/Typography";
 import Media from './Media';
 
 const styles = theme => ({
@@ -36,7 +37,7 @@ class MediaTabs extends React.Component {
       </AppBar>
     );
     
-    const { classes, kinds, data, home } = this.props;
+    const { classes, kinds, data, home, addData, removeData } = this.props;
     const { value } = this.state;
     const homeDesktopTabs = {
         position: 'sticky',
@@ -63,39 +64,55 @@ class MediaTabs extends React.Component {
         zIndex: 10
       },
       kindsContainer = {
-        display: 'flex',
+        display: "flex",
         flexDirection: 'row',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(252,252,252)'
       };
     
     const Header = (bool) => bool ?
       <Responsive maxWidth={599}>
-        {matches => matches ?
-          SearchNav(homeMobileTabs)
-          :
-          SearchNav(homeDesktopTabs)
+        {
+          matches => matches ?
+            SearchNav(homeMobileTabs)
+            :
+            SearchNav(homeDesktopTabs)
         }
       </Responsive>
       :
       <Responsive maxWidth={599}>
         {
           matches => matches ?
-          SearchNav(mobileTabs)
-          :
-          SearchNav(desktopTabs)
+            SearchNav(mobileTabs)
+            :
+            SearchNav(desktopTabs)
         }
       </Responsive>;
     
     return (
-      <div className={classes.root}>
-        {Header(home)}
-        <div id={`tab-container`} style={kindsContainer}>
+      Array.isArray(kinds) && kinds.length > 0 ?
+        <div className={classes.root}>
           {
-            data[kinds[value]].map((media, i) =>
-              <Media media={media} key={`${media}-${i}`} kind={kinds[value]} saved={home}/>)
+            Header(home)
           }
+          <div id={`tab-container`} style={kindsContainer}>
+            {
+              data[kinds[value]] ?
+                data[kinds[value]].map((media, i) =>
+                  <Media media={media} key={`${media}-${i}`}
+                         kind={kinds[value]} saved={home}
+                         addData={addData} removeData={removeData}/>)
+                :
+                <Typography variant="h5" align="center" color="textSecondary"
+                            style={{ marginTop: 30 }}>
+                  You have no media of this kind...
+                </Typography>
+            }
+          </div>
         </div>
-      </div>
+        :
+        <div/>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,7 +6,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from "@material-ui/core/ButtonBase";
 import HeartIcon from '@material-ui/icons/FavoriteBorderOutlined';
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import SavedHeartIcon from '@material-ui/icons/FavoriteTwoTone';
+
+;
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 const styles = theme => ({
   card: {
@@ -33,46 +36,8 @@ const styles = theme => ({
 
 const Media = (props) => {
   
-  const { classes, media, kind, saved } = props;
-  
-  const saveToLocal = (media, kind) => {
-    
-    if (!localStorage.getItem('itunes')) {
-      const newStorage = { [kind]: [] };
-      newStorage[kind].push(media);
-      localStorage.setItem('itunes', JSON.stringify(newStorage));
-    } else {
-      const existingStorage = localStorage.getItem('itunes');
-      if (!existingStorage.includes(media.url)) {
-        const parsedStorage = JSON.parse(existingStorage);
-        if (parsedStorage[kind]) {
-          parsedStorage[kind].push(media);
-          localStorage.setItem('itunes', JSON.stringify(parsedStorage));
-        } else {
-          parsedStorage[kind] = [];
-          parsedStorage[kind].push(media);
-          localStorage.setItem('itunes', JSON.stringify(parsedStorage));
-        }
-      }
-    }
-  };
-  
-  const deleteLocal = (media, kind) => {
-    
-    const localData = localStorage.getItem('itunes');
-    const parsedData = JSON.parse(localData);
-    const filtered = parsedData[kind].filter(localMedia => localMedia.url !== media.url);
-    parsedData[kind] = filtered;
-    for (let key in parsedData) {
-      if (!parsedData[key].length) {
-        delete parsedData[key]
-      }
-    }
-    if (Object.keys(parsedData).length === 0) {
-      localStorage.clear();
-    }
-    localStorage.setItem('itunes', JSON.stringify(parsedData));
-  };
+  const { classes, media, kind, saved, addData, removeData } = props;
+  const [heart, setHeart] = useState(false);
   
   return (
     <Card className={classes.card}>
@@ -96,9 +61,21 @@ const Media = (props) => {
             <ButtonBase title={`Add to favorites`} style={{ float: 'right' }}>
               {
                 saved ?
-                  <DeleteForeverOutlinedIcon style={{ zIndex: 1 }} onClick={() => deleteLocal(media, kind)}/>
+                  <DeleteOutlinedIcon style={{ zIndex: 1 }}
+                                      onClick={() => removeData(media, kind)}/>
                   :
-                  <HeartIcon style={{ zIndex: 1 }} onClick={() => saveToLocal(media, kind)}/>
+                  heart ?
+                    <SavedHeartIcon style={{ zIndex: 1 }}
+                                    onClick={() => {
+                                      setHeart(!heart);
+                                      removeData(media, kind)
+                                    }}/>
+                    :
+                    <HeartIcon style={{ zIndex: 1 }}
+                               onClick={() => {
+                                 setHeart(!heart);
+                                 addData(media, kind)
+                               }}/>
               }
             </ButtonBase>
           </Typography>

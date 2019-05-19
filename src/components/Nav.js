@@ -57,11 +57,7 @@ const Nav = (props) => {
   
   const [mobileOpen, handleDrawerToggle] = useState(false);
   
-  const clearStorage = () => {
-    localStorage.clear();
-  };
-  
-  const { classes } = props;
+  const { classes, clearAll } = props;
   
   const drawer = (
     <div>
@@ -89,7 +85,7 @@ const Nav = (props) => {
       </List>
       <Divider/>
       <List>
-        <ListItem button key={'empty-local'} onClick={clearStorage}>
+        <ListItem button key={'empty-local'} onClick={clearAll}>
           <ListItemIcon>
             <DeleteIcon/>
           </ListItemIcon>

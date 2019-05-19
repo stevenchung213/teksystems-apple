@@ -3,11 +3,17 @@ import Responsive from 'react-responsive';
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import MediaTabs from './MediaTabs';
+import Loadable from 'react-loadable';
+import Loading from './Loading';
 
-const Search = ({ view }) => {
+const MediaTabs = Loadable({
+  loader: () => import('./MediaTabs'),
+  loading: Loading
+});
+
+const Search = ({ view, addData, removeData }) => {
   
-  const api = 'http://localhost:3000/api/v1/itunes/search';
+  const api = `https://itunes-catalog.herokuapp.com/api/v1/itunes/search`;
   
   const [value, setValue] = useState('');
   const [data, setData] = useState({
@@ -111,7 +117,9 @@ const Search = ({ view }) => {
             <LinearProgress/>
             :
             data.complete &&
-            <MediaTabs kinds={kinds} data={data.data} home={false} centered/>
+            <MediaTabs kinds={kinds} data={data.data}
+                       addData={addData} removeData={removeData}
+                       home={false} centered/>
         }
       </div>
     </div>
