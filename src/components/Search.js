@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MediaTabs from './MediaTabs';
 
-const Search = ({ view }) => {
+const Search = ({ view, addData, removeData }) => {
   
   const api = 'http://localhost:3000/api/v1/itunes/search';
   
@@ -111,7 +111,9 @@ const Search = ({ view }) => {
             <LinearProgress/>
             :
             data.complete &&
-            <MediaTabs kinds={kinds} data={data.data} home={false} centered/>
+            <MediaTabs kinds={kinds} data={data.data}
+                       addData={addData} removeData={removeData}
+                       home={false} centered/>
         }
       </div>
     </div>

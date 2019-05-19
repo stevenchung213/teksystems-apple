@@ -2,26 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import MediaTabs from './MediaTabs';
 
-const Home = ({ view }) => {
-  
-  const [localData, setData] = useState(undefined);
-  const [kinds, setKinds] = useState(undefined);
-
-  useEffect(() => {
-
-    const storedData = JSON.parse(localStorage.getItem('itunes'));
-
-    if (storedData && Object.keys(storedData).length > 0) {
-      const parsedData = JSON.parse(localStorage.getItem('itunes'));
-      const localKinds = Object.keys(parsedData);
-      setData(parsedData);
-      setKinds(localKinds);
-      return localData;
-    } else {
-      localStorage.clear();
-      return localData;
-    }
-  },[]);
+const Home = ({ view, data, kinds, addData, removeData }) => {
   
   const homeContainer = {
     display: "flex",
@@ -34,12 +15,13 @@ const Home = ({ view }) => {
     <div id={`home-wrapper`} style={view}>
       <div id={`home-container`} style={homeContainer}>
         {
-          !localData ?
-            <Typography variant="h5" style={{marginTop: 30}} color="textSecondary">
+          Array.isArray(kinds) && kinds.length === 0 ?
+            <Typography variant="h5" style={{ marginTop: 30, backgroundColor: '-internal-root-color' }} color="textSecondary">
               You have no saved media...
             </Typography>
             :
-            <MediaTabs kinds={kinds} data={localData} home/>
+            <MediaTabs kinds={kinds} data={data} home
+                       addData={addData} removeData={removeData}/>
         }
       </div>
     </div>

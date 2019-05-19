@@ -33,7 +33,7 @@ const styles = theme => ({
 
 const Media = (props) => {
   
-  const { classes, media, kind, saved } = props;
+  const { classes, media, kind, saved, addData, removeData } = props;
   
   const saveToLocal = (media, kind) => {
     
@@ -96,9 +96,9 @@ const Media = (props) => {
             <ButtonBase title={`Add to favorites`} style={{ float: 'right' }}>
               {
                 saved ?
-                  <DeleteForeverOutlinedIcon style={{ zIndex: 1 }} onClick={() => deleteLocal(media, kind)}/>
+                  <DeleteForeverOutlinedIcon style={{ zIndex: 1 }} onClick={() => removeData(media, kind)}/>
                   :
-                  <HeartIcon style={{ zIndex: 1 }} onClick={() => saveToLocal(media, kind)}/>
+                  <HeartIcon style={{ zIndex: 1 }} onClick={() => addData(media, kind)}/>
               }
             </ButtonBase>
           </Typography>
