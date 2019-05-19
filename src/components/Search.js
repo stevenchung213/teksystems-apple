@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MediaTabs from './MediaTabs';
-import useLocalStorage from '../hooks';
+import { useLocalStorage } from '../hooks';
 
 const Search = ({ view }) => {
   

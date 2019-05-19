@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from "@material-ui/core/ButtonBase";
 import HeartIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import { useLocalStorage } from '../hooks';
 
 const styles = theme => ({
   card: {
@@ -74,6 +75,8 @@ const Media = (props) => {
     localStorage.setItem('itunes', JSON.stringify(parsedData));
   };
   
+  const { localData, addMedia, deleteMedia } = useLocalStorage();
+  
   return (
     <Card className={classes.card}>
       <div className={classes.details}>
@@ -96,9 +99,15 @@ const Media = (props) => {
             <ButtonBase title={`Add to favorites`} style={{ float: 'right' }}>
               {
                 saved ?
-                  <DeleteForeverOutlinedIcon style={{ zIndex: 1 }} onClick={() => deleteLocal(media, kind)}/>
+                  <DeleteForeverOutlinedIcon style={{ zIndex: 1 }}
+                    // onClick={() => deleteLocal(media, kind)}
+                    onClick={() => deleteMedia(media, kind)}
+                  />
                   :
-                  <HeartIcon style={{ zIndex: 1 }} onClick={() => saveToLocal(media, kind)}/>
+                  <HeartIcon style={{ zIndex: 1 }}
+                    // onClick={() => saveToLocal(media, kind)}
+                    onClick={() => addMedia(media, kind)}
+                  />
               }
             </ButtonBase>
           </Typography>

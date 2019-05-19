@@ -24,19 +24,20 @@ class MediaTabs extends React.Component {
   };
   
   render() {
+    const { classes, kinds, data, home } = this.props;
+  
     const SearchNav = style => (
       <AppBar position="static" color="default" style={style}>
         <Tabs value={value} onChange={this.handleChange}
               indicatorColor="primary" textColor="primary"
               variant="scrollable" scrollButtons="auto">
           {
-            kinds.map(kind => <Tab label={`${kind}s`} key={`${kind}`}/>)
+            kinds && kinds.map(kind => <Tab label={`${kind}s`} key={`${kind}`}/>)
           }
         </Tabs>
       </AppBar>
     );
     
-    const { classes, kinds, data, home } = this.props;
     const { value } = this.state;
     const homeDesktopTabs = {
         position: 'sticky',
@@ -91,7 +92,7 @@ class MediaTabs extends React.Component {
         {Header(home)}
         <div id={`tab-container`} style={kindsContainer}>
           {
-            data[kinds[value]].map((media, i) =>
+            data && data[kinds[value]].map((media, i) =>
               <Media media={media} key={`${media}-${i}`} kind={kinds[value]} saved={home}/>)
           }
         </div>
