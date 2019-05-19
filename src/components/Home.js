@@ -21,7 +21,7 @@ const Home = ({ view, data, kinds, addData, removeData }) => {
     <div id={`home-wrapper`} style={view}>
       <div id={`home-container`} style={homeContainer}>
         {
-          Array.isArray(kinds) && kinds.length === 0 ?
+          data === null ?
             <Typography variant="h5" style={{ marginTop: 30, backgroundColor: '-internal-root-color' }} color="textSecondary">
               You have no saved media...
             </Typography>

@@ -22,6 +22,11 @@ class Main extends React.Component {
     };
   }
   
+  clearLocal = () => {
+    localStorage.clear();
+    this.componentDidMount();
+  };
+  
   saveToLocal = (media, kind) => {
     if (!localStorage.getItem('itunes')) {
       const newStorage = { [kind]: [] };
@@ -62,12 +67,12 @@ class Main extends React.Component {
   };
   
   componentDidMount() {
-    if (localStorage.getItem('itunes') !== null) {
+    if (localStorage.getItem('itunes') !== null && localStorage.getItem('itunes') !== '{}') {
       const getLocalData = JSON.parse(localStorage.getItem('itunes'));
-      console.log(getLocalData);
       const kinds = Object.keys(getLocalData);
-      console.log(kinds);
       this.setState({ data: getLocalData, kinds: kinds });
+    } else {
+      this.setState({ data: null, kinds: null })
     }
   }
   
@@ -91,7 +96,7 @@ class Main extends React.Component {
     
     return (
       <Router>
-        <Nav/>
+        <Nav clearAll={this.clearLocal}/>
         <Switch>
           <Route exact path='/' render={() => (
             <Responsive maxWidth={599}>
