@@ -100,7 +100,7 @@ class MediaTabs extends React.Component {
             {
               data[kinds[value]] ?
                 data[kinds[value]].map((media, i) =>
-                  <Media media={media} key={`${media}-${i}`}
+                  <Media media={media} key={`${media.track}`}
                          kind={kinds[value]} saved={home}
                          addData={addData} removeData={removeData}/>)
                 :

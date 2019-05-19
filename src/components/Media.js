@@ -35,7 +35,10 @@ const styles = theme => ({
 const Media = (props) => {
   
   const { classes, media, kind, saved, addData, removeData } = props;
-  const [heart, setHeart] = useState(false);
+  const [heart, setHeart] = useState({
+    saved: false,
+    kind: ''
+  });
   
   return (
     <Card className={classes.card}>
@@ -62,16 +65,20 @@ const Media = (props) => {
                   <DeleteOutlinedIcon style={{ zIndex: 1 }}
                                       onClick={() => removeData(media, kind)}/>
                   :
-                  heart ?
+                  heart.saved ?
                     <SavedHeartIcon style={{ zIndex: 1 }}
                                     onClick={() => {
-                                      setHeart(!heart);
+                                      if (heart.kind === '' || heart.kind === kind) {
+                                        setHeart({saved: !heart.saved, kind: kind})
+                                      }
                                       removeData(media, kind)
                                     }}/>
                     :
                     <HeartIcon style={{ zIndex: 1 }}
                                onClick={() => {
-                                 setHeart(!heart);
+                                 if (heart.kind === '' || heart.kind === kind) {
+                                   setHeart({saved: !heart.saved, kind: kind})
+                                 }
                                  addData(media, kind)
                                }}/>
               }
