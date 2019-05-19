@@ -36,17 +36,31 @@ class MediaTabs extends React.Component {
       </AppBar>
     );
     
-    const { classes, kinds, data } = this.props;
+    const { classes, kinds, data, home } = this.props;
     const { value } = this.state;
-    const desktopTabs = {
+    const homeDesktopTabs = {
+        position: 'sticky',
+        top: 64,
+        marginBottom: 5,
+        zIndex: 10
+      },
+      homeMobileTabs = {
+        position: 'sticky',
+        top: 55,
+        marginBottom: 5,
+        zIndex: 10
+      },
+      desktopTabs = {
         position: 'sticky',
         top: 136,
-        marginBottom: 5
+        marginBottom: 5,
+        zIndex: 10
       },
       mobileTabs = {
         position: 'sticky',
         top: 55,
-        marginBottom: 5
+        marginBottom: 5,
+        zIndex: 10
       },
       kindsContainer = {
         display: 'flex',
@@ -54,21 +68,30 @@ class MediaTabs extends React.Component {
         flexWrap: 'wrap'
       };
     
+    const Header = (bool) => bool ?
+      <Responsive maxWidth={599}>
+        {matches => matches ?
+          SearchNav(homeMobileTabs)
+          :
+          SearchNav(homeDesktopTabs)
+        }
+      </Responsive>
+      :
+      <Responsive maxWidth={599}>
+        {matches => matches ?
+          SearchNav(mobileTabs)
+          :
+          SearchNav(desktopTabs)
+        }
+      </Responsive>;
+    
     return (
       <div className={classes.root}>
-        <Responsive maxWidth={599}>
-          {matches => (
-            matches ? (
-              SearchNav(mobileTabs)
-            ) : (
-              SearchNav(desktopTabs)
-            ))
-          }
-        </Responsive>
+        {Header(home)}
         <div id={`tab-container`} style={kindsContainer}>
           {
             data[kinds[value]].map((media, i) =>
-              <Media media={media} key={`${media}-${i}`}/>)
+              <Media media={media} key={`${media}-${i}`} kind={kinds[value]}/>)
           }
         </div>
       </div>

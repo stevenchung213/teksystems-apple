@@ -47,7 +47,7 @@ const Search = ({ view }) => {
       position: 'sticky',
       top: 64,
       backgroundColor: 'rgba(245, 245, 245, 1)',
-      zIndex: 5
+      zIndex: 20
     },
     inputContainer = {
       display: 'flex',
@@ -86,7 +86,7 @@ const Search = ({ view }) => {
       <div id={`results-container`}>
         {
           data.loading ? <LinearProgress/> :
-            data.complete && <MediaTabs kinds={kinds} data={data.data}/>
+            data.complete && <MediaTabs kinds={kinds} data={data.data} home={false}/>
         }
       </div>
     </div>

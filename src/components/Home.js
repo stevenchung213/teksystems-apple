@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
-import Media from './Media';
+import MediaTabs from './MediaTabs';
 
 const Home = ({ view }) => {
   
   const [localData, setData] = useState(undefined);
+  const [kinds, setKinds] = useState(undefined);
   
   useEffect(() => {
     if (localStorage.getItem('itunes')) {
       const parsedData = JSON.parse(localStorage.getItem('itunes'));
+      const localKinds = Object.keys(parsedData);
       setData(parsedData);
+      setKinds(localKinds);
     }
     return localData;
   }, []);
@@ -18,9 +21,9 @@ const Home = ({ view }) => {
     display: "flex",
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    paddingTop: '5vh'
+    justifyContent: 'center'
   };
+  console.log(localData);
   
   return (
     <div id={`home-wrapper`} style={view}>
@@ -31,8 +34,7 @@ const Home = ({ view }) => {
               No saved media
             </Typography>
             :
-            localData.map((media, i) =>
-              <Media media={media} key={`local-${i}`}/>)
+            <MediaTabs kinds={kinds} data={localData} home/>
         }
       </div>
     </div>

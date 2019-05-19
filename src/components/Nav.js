@@ -101,7 +101,7 @@ const Nav = (props) => {
     <div className={classes.root}>
       <CssBaseline/>
       <AppBar position="fixed" color="default"
-              className={classes.appBar}>
+              className={classes.appBar} style={{zIndex: 100}}>
         <Toolbar>
           <IconButton
             color="inherit"

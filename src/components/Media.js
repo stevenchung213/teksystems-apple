@@ -31,18 +31,18 @@ const styles = theme => ({
 });
 
 const Media = (props) => {
-  const { classes, media, saved } = props;
+  const { classes, media, kind } = props;
   
   const saveToLocal = (media) => {
     if (!localStorage.getItem('itunes')) {
-      const newStorage = [];
-      newStorage.push(media);
+      const newStorage = { [kind]: [] };
+      newStorage[kind].push(media);
       localStorage.setItem('itunes', JSON.stringify(newStorage));
     } else {
       const existingStorage = localStorage.getItem('itunes');
       if (!existingStorage.includes(media.url)) {
         const parsedStorage = JSON.parse(existingStorage);
-        parsedStorage.push(media);
+        parsedStorage[kind].push(media);
         localStorage.setItem('itunes', JSON.stringify(parsedStorage));
       }
     }
