@@ -101,12 +101,14 @@ class Main extends React.Component {
           )}/>
           <Route path='/search' render={() => (
             <Responsive maxWidth={599}>
-              {matches => (
-                matches ?
-                  <Search view={mobile} addData={this.saveToLocal} removeData={this.deleteLocal}/>
+              {
+                matches => matches ?
+                  <Search view={mobile} addData={this.saveToLocal}
+                          removeData={this.deleteLocal}/>
                   :
-                  <Search view={desktop} addData={this.saveToLocal} removeData={this.deleteLocal}/>
-              )}
+                  <Search view={desktop} addData={this.saveToLocal}
+                          removeData={this.deleteLocal}/>
+              }
             </Responsive>
           )}/>
           <Redirect from='*' to='/'/>

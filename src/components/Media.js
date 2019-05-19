@@ -35,45 +35,6 @@ const Media = (props) => {
   
   const { classes, media, kind, saved, addData, removeData } = props;
   
-  const saveToLocal = (media, kind) => {
-    
-    if (!localStorage.getItem('itunes')) {
-      const newStorage = { [kind]: [] };
-      newStorage[kind].push(media);
-      localStorage.setItem('itunes', JSON.stringify(newStorage));
-    } else {
-      const existingStorage = localStorage.getItem('itunes');
-      if (!existingStorage.includes(media.url)) {
-        const parsedStorage = JSON.parse(existingStorage);
-        if (parsedStorage[kind]) {
-          parsedStorage[kind].push(media);
-          localStorage.setItem('itunes', JSON.stringify(parsedStorage));
-        } else {
-          parsedStorage[kind] = [];
-          parsedStorage[kind].push(media);
-          localStorage.setItem('itunes', JSON.stringify(parsedStorage));
-        }
-      }
-    }
-  };
-  
-  const deleteLocal = (media, kind) => {
-    
-    const localData = localStorage.getItem('itunes');
-    const parsedData = JSON.parse(localData);
-    const filtered = parsedData[kind].filter(localMedia => localMedia.url !== media.url);
-    parsedData[kind] = filtered;
-    for (let key in parsedData) {
-      if (!parsedData[key].length) {
-        delete parsedData[key]
-      }
-    }
-    if (Object.keys(parsedData).length === 0) {
-      localStorage.clear();
-    }
-    localStorage.setItem('itunes', JSON.stringify(parsedData));
-  };
-  
   return (
     <Card className={classes.card}>
       <div className={classes.details}>
@@ -96,9 +57,11 @@ const Media = (props) => {
             <ButtonBase title={`Add to favorites`} style={{ float: 'right' }}>
               {
                 saved ?
-                  <DeleteForeverOutlinedIcon style={{ zIndex: 1 }} onClick={() => removeData(media, kind)}/>
+                  <DeleteForeverOutlinedIcon style={{ zIndex: 1 }}
+                                             onClick={() => removeData(media, kind)}/>
                   :
-                  <HeartIcon style={{ zIndex: 1 }} onClick={() => addData(media, kind)}/>
+                  <HeartIcon style={{ zIndex: 1 }}
+                             onClick={() => addData(media, kind)}/>
               }
             </ButtonBase>
           </Typography>
