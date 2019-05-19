@@ -2,9 +2,15 @@ import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Responsive from 'react-responsive';
+import Loadable from 'react-loadable';
 import Nav from './Nav';
 import Home from './Home';
-import Search from './Search';
+import Loading from './Loading';
+
+const Search = Loadable({
+  loader: () => import('./Search'),
+  loading: Loading
+});
 
 class Main extends React.Component {
   

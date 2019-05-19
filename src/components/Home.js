@@ -1,6 +1,12 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import MediaTabs from './MediaTabs';
+import Loadable from 'react-loadable';
+import Loading from './Loading';
+
+const MediaTabs = Loadable({
+  loader: () => import('./MediaTabs'),
+  loading: Loading
+});
 
 const Home = ({ view, data, kinds, addData, removeData }) => {
   

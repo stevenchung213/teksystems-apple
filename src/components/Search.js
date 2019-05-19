@@ -3,7 +3,13 @@ import Responsive from 'react-responsive';
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import MediaTabs from './MediaTabs';
+import Loadable from 'react-loadable';
+import Loading from './Loading';
+
+const MediaTabs = Loadable({
+  loader: () => import('./MediaTabs'),
+  loading: Loading
+});
 
 const Search = ({ view, addData, removeData }) => {
   
