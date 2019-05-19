@@ -1,4 +1,4 @@
-###iTunes catalog###
+## iTunes catalog
 
   **deployed onto heroku** 
    * https://itunes-catalog.herokuapp.com
