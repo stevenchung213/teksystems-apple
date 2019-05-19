@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,7 +6,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from "@material-ui/core/ButtonBase";
 import HeartIcon from '@material-ui/icons/FavoriteBorderOutlined';
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import SavedHeartIcon from '@material-ui/icons/FavoriteTwoTone';
+
+;
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 const styles = theme => ({
   card: {
@@ -34,6 +37,7 @@ const styles = theme => ({
 const Media = (props) => {
   
   const { classes, media, kind, saved, addData, removeData } = props;
+  const [heart, setHeart] = useState(false);
   
   return (
     <Card className={classes.card}>
@@ -57,11 +61,21 @@ const Media = (props) => {
             <ButtonBase title={`Add to favorites`} style={{ float: 'right' }}>
               {
                 saved ?
-                  <DeleteForeverOutlinedIcon style={{ zIndex: 1 }}
-                                             onClick={() => removeData(media, kind)}/>
+                  <DeleteOutlinedIcon style={{ zIndex: 1 }}
+                                      onClick={() => removeData(media, kind)}/>
                   :
-                  <HeartIcon style={{ zIndex: 1 }}
-                             onClick={() => addData(media, kind)}/>
+                  heart ?
+                    <SavedHeartIcon style={{ zIndex: 1 }}
+                                    onClick={() => {
+                                      setHeart(!heart);
+                                      removeData(media, kind)
+                                    }}/>
+                    :
+                    <HeartIcon style={{ zIndex: 1 }}
+                               onClick={() => {
+                                 setHeart(!heart);
+                                 addData(media, kind)
+                               }}/>
               }
             </ButtonBase>
           </Typography>
