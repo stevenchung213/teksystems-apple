@@ -12,8 +12,8 @@ const MediaTabs = Loadable({
 });
 
 const Search = ({ view, addData, removeData }) => {
-  
-  const api = 'http://localhost:3000/api/v1/itunes/search';
+  const port = process.env.PORT || 3000;
+  const api = `http://localhost:${port}/api/v1/itunes/search`;
   
   const [value, setValue] = useState('');
   const [data, setData] = useState({
