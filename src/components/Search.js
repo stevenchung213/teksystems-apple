@@ -43,9 +43,9 @@ const Search = ({ view }) => {
     console.log(data);
   };
   
-  const saveToLocal = () => {
-    localStorage
-  };
+  // const saveToLocal = () => {
+  //   localStorage
+  // };
   
   const searchContainer = {
       display: "flex",

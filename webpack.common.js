@@ -78,7 +78,7 @@ module.exports = {
         }
       ],
       links: [
-        '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">'
+        "https://fonts.googleapis.com/css?family=Roboto:300,400,500"
       ],
       appMountId: 'root',
       bodyHtmlSnippet: `<noscript>Please enable JavaScript...</noscript>`,
