@@ -1,18 +1,20 @@
-### To get started:
+###iTunes catalog
 
-  **npm start** 
-   * development mode ONLY
-   * webpack-dev-server
-   * build to memory only
-   * no actual files are written to file system
-   * to change settings configure webpack.dev.js
+  **deployed onto heroku** 
+   * https://itunes-catalog.herokuapp.com
     
-  **npm run build**
-   * production mode 
-   * webpack production build
-   * build to file system
-   * most of the popular production level optimizations enabled
-        * code / chunk splitting, terser minification, css compression, gzip compression... 
-   * to change settings configure webpack.prod.js
+  **state management**
+   * mixture of single parent class state management  and hooks throughout children for individual state management
+  
+  **data persistence**
+   * utilized local storage
+   * database management can easily be incorporated
+  
+  **original package.json scripts before deployment**
+*        "start": "webpack-dev-server --config webpack.dev.js --progress --colors",
+         "build": "webpack --config webpack.prod.js --progress --colors",
+         "server": "nodemon ./server/index.js"
+
+ 
 
 
