@@ -6,7 +6,7 @@ import Main from './components/Main';
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <Component/>
     </AppContainer>,
     document.getElementById('root')
   );

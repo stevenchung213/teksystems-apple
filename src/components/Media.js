@@ -7,8 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from "@material-ui/core/ButtonBase";
 import HeartIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import SavedHeartIcon from '@material-ui/icons/FavoriteTwoTone';
-
-;
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 const styles = theme => ({
