@@ -41,7 +41,6 @@ class Main extends React.Component {
     }
     localStorage.setItem('itunes', JSON.stringify(data));
     this.setState({ data: data });
-    this.componentDidMount();
   };
   
   deleteLocal = (media, kind) => {
