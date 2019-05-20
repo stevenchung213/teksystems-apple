@@ -21,8 +21,13 @@ class MediaTabs extends React.Component {
     
     this.state = {
       value: 0,
-      data: this.props.data
+      data: null,
+      kinds: null
     };
+  }
+  
+  componentDidMount() {
+    this.setState({data: this.props.data, kinds: this.props.kinds});
   }
   
   heartStatus = (id, kind) => {
@@ -56,8 +61,8 @@ class MediaTabs extends React.Component {
       </AppBar>
     );
     
-    const { classes, kinds, home, addData, removeData } = this.props;
-    const { value, data } = this.state;
+    const { classes, home, addData, removeData } = this.props;
+    const { value, data, kinds } = this.state;
     
     const homeDesktopTabs = {
         position: 'sticky',

@@ -44,22 +44,21 @@ class Main extends React.Component {
   };
   
   deleteLocal = (media, kind) => {
-    const data = this.state.data;
+    let data = this.state.data;
     if (data[kind].length === 1 && data[kind][0].url === media.url) {
       delete data[kind];
       localStorage.setItem('itunes', JSON.stringify(data));
       this.setState({ data: data });
       this.componentDidMount();
-      return;
-    }
-    for (let i = 0; i < data[kind].length; i++) {
-      if (data[kind][i].url === media.url) {
-        data[kind].splice(i, 1);
+    } else {
+      for (let i = 0; i < data[kind].length; i++) {
+        if (data[kind][i].url === media.url) {
+          data[kind].splice(i, 1);
+        }
       }
+      localStorage.setItem('itunes', JSON.stringify(data));
+      this.setState({ data: data });
     }
-    localStorage.setItem('itunes', JSON.stringify(data));
-    this.setState({ data: data });
-    this.componentDidMount();
   };
   
   componentDidMount() {

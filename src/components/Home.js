@@ -22,7 +22,7 @@ const Home = ({ view, data, kinds, addData, removeData }) => {
       <div id={`home-container`} style={homeContainer}>
         {
          !data || !kinds ?
-          <Typography variant="h5" style={{ marginTop: 30, backgroundColor: '-internal-root-color' }} color="textSecondary">
+          <Typography variant="h5" style={{ marginTop: 30 }} color="textSecondary">
             You have no saved media...
           </Typography>
           :
