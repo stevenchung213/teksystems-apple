@@ -20,13 +20,39 @@ class MediaTabs extends React.Component {
     super(props);
     
     this.state = {
-      value: 0
+      value: 0,
+      data: this.props.data
     };
   }
   
-  heartStatus = (el) => {
-    console.log(el)
-    this.setState({ hearted: !this.state.hearted });
+  heartStatus = (id, kind) => {
+    console.log(id)
+    console.log(this.state.data);
+    let modified = this.state.data;
+    for (let i = 0; i < modified[kind].length; i++) {
+      if (Object.values(modified[kind][i]).includes(id)) {
+        if (!modified[kind][i].hasOwnProperty('hearted')) {
+          modified[kind][i].hearted = true;
+        } else {
+          modified[kind][i].hearted = !modified[kind][i].hearted;
+        }
+      }
+      // if (Object.values(modified[kind][i]).includes(id) && !modified[kind][i].hearted) {
+      //   modified[kind][i].hearted = true;
+      // }
+    }
+    // for (let key in modified) {
+    //   for (let i = 0; i < modified[key].length; i++) {
+    //     if (Object.values(modified[key][i]).includes(id) && modified[key][i].hearted) {
+    //       modified[key][i].hearted = false;
+    //     }
+    //     if (Object.values(modified[key][i]).includes(id) && !modified[key][i].hearted) {
+    //       modified[key][i].hearted = true;
+    //     }
+    //   }
+    // }
+    console.log(modified);
+    this.setState({ data: modified })
   };
   
   handleChange = (event, value) => {
@@ -46,8 +72,9 @@ class MediaTabs extends React.Component {
       </AppBar>
     );
     
-    const { classes, kinds, data, home, addData, removeData } = this.props;
-    const { value, hearted } = this.state;
+    const { classes, kinds, home, addData, removeData } = this.props;
+    const { value, data } = this.state;
+    
     const homeDesktopTabs = {
         position: 'sticky',
         top: 64,
@@ -109,7 +136,7 @@ class MediaTabs extends React.Component {
             {
               data[kinds[value]] ?
                 data[kinds[value]].map((media, i) =>
-                  <Media media={media} key={`${media.url}`}
+                  <Media media={media} key={i}
                          kind={kinds[value]} saved={home}
                          addData={addData} removeData={removeData}
                          heartStatus={this.heartStatus}/>)

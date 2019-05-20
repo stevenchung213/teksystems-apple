@@ -65,12 +65,13 @@ const Media = (props) => {
                   <DeleteOutlinedIcon style={{ zIndex: 1 }}
                                       onClick={() => removeData(media, kind)}/>
                   :
-                  heart.saved ?
+                  heart.saved && media.hearted ?
                     <SavedHeartIcon style={{ zIndex: 1, color: 'red'}}
                                     onClick={() => {
                                       if (heart.kind === kind) {
                                         setHeart({ saved: !heart.saved, kind: kind });
                                         removeData(media, kind);
+                                        heartStatus(media.url, kind);
                                       }
                                     }}/>
                     :
@@ -79,6 +80,7 @@ const Media = (props) => {
                                  if (heart.kind === '' || heart.kind === kind) {
                                    setHeart({ saved: !heart.saved, kind: kind });
                                    addData(media, kind);
+                                   heartStatus(media.url, kind);
                                  }
                                }}/>
               }
