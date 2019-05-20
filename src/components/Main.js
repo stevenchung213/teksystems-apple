@@ -41,25 +41,6 @@ class Main extends React.Component {
     localStorage.setItem('itunes', JSON.stringify(data));
     this.setState({ data: data });
     this.componentDidMount();
-    // if (!localStorage.getItem('itunes')) {
-    //   const newStorage = { [kind]: [] };
-    //   newStorage[kind].push(media);
-    //   localStorage.setItem('itunes', JSON.stringify(newStorage));
-    // } else {
-    //   const existingStorage = localStorage.getItem('itunes');
-    //   if (!existingStorage.includes(media.url)) {
-    //     const parsedStorage = JSON.parse(existingStorage);
-    //     if (parsedStorage[kind]) {
-    //       parsedStorage[kind].push(media);
-    //       localStorage.setItem('itunes', JSON.stringify(parsedStorage));
-    //     } else {
-    //       parsedStorage[kind] = [];
-    //       parsedStorage[kind].push(media);
-    //       localStorage.setItem('itunes', JSON.stringify(parsedStorage));
-    //     }
-    //   }
-    // }
-    // this.componentDidMount();
   };
   
   deleteLocal = (media, kind) => {
@@ -79,26 +60,7 @@ class Main extends React.Component {
     localStorage.setItem('itunes', JSON.stringify(data));
     this.setState({ data: data });
     this.componentDidMount();
-    // const filtered = this.state.data[kind].filter(item => item.url !== media.url);
-    // const localData = localStorage.getItem('itunes');
-    // const parsedData = JSON.parse(localData);
-    // const filtered = parsedData[kind].filter(localMedia => localMedia.url !== media.url);
-    // parsedData[kind] = filtered;
-    // for (let key in parsedData) {
-    //   if (!parsedData[key].length) {
-    //     delete parsedData[key]
-    //   }
-    // }
-    // if (Object.keys(parsedData).length === 0) {
-    //   localStorage.clear();
-    // }
-    // localStorage.setItem('itunes', JSON.stringify(parsedData));
-    // this.componentDidMount();
   };
-  
-  // shouldComponentUpdate(nextProps, nextState, nextContext) {
-  //   return JSON.stringify(nextState.data) === JSON.stringify(this.state.data);
-  // }
   
   componentDidMount() {
     if (localStorage.getItem('itunes') !== null && localStorage.getItem('itunes') !== '{}') {
