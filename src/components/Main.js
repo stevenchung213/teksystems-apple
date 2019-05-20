@@ -41,6 +41,7 @@ class Main extends React.Component {
     }
     localStorage.setItem('itunes', JSON.stringify(data));
     this.setState({ data: data });
+    this.componentDidMount();
   };
   
   deleteLocal = (media, kind) => {
@@ -58,9 +59,13 @@ class Main extends React.Component {
           data[kind].splice(i, 1);
         }
       }
-      localStorage.setItem('itunes', JSON.stringify(data));
-      this.setState({ data: data });
     }
+    if (Object.keys(data).length === 0) {
+      localStorage.clear();
+      this.setState({ data: null })
+    }
+    localStorage.setItem('itunes', JSON.stringify(data));
+    this.setState({ data: data });
   };
   
   componentDidMount() {
@@ -74,6 +79,7 @@ class Main extends React.Component {
   }
   
   render() {
+    console.log(this.state.data)
     const mobile = {
         height: 'auto',
         width: 'auto',

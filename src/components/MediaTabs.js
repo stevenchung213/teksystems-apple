@@ -96,6 +96,7 @@ class MediaTabs extends React.Component {
         }
       </Responsive>;
     
+    console.log('mediatabs',data)
     return (
       Array.isArray(kinds) && kinds.length > 0 ?
         <div className={classes.root}>

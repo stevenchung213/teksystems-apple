@@ -16,7 +16,7 @@ const Home = ({ view, data, kinds, addData, removeData }) => {
     flexWrap: 'wrap',
     justifyContent: 'center'
   };
-
+  console.log('home',data)
   return (
     <div id={`home-wrapper`} style={view} key={data}>
       <div id={`home-container`} style={homeContainer}>
