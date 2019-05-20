@@ -24,60 +24,96 @@ class Main extends React.Component {
   
   clearLocal = () => {
     localStorage.clear();
-    this.componentDidMount();
+    this.setState({ data: null });
   };
   
   saveToLocal = (media, kind) => {
-    if (!localStorage.getItem('itunes')) {
-      const newStorage = { [kind]: [] };
-      newStorage[kind].push(media);
-      localStorage.setItem('itunes', JSON.stringify(newStorage));
+    let data = this.state.data;
+    if (!data) {
+      data = { [kind]: [media] };
     } else {
-      const existingStorage = localStorage.getItem('itunes');
-      if (!existingStorage.includes(media.url)) {
-        const parsedStorage = JSON.parse(existingStorage);
-        if (parsedStorage[kind]) {
-          parsedStorage[kind].push(media);
-          localStorage.setItem('itunes', JSON.stringify(parsedStorage));
-        } else {
-          parsedStorage[kind] = [];
-          parsedStorage[kind].push(media);
-          localStorage.setItem('itunes', JSON.stringify(parsedStorage));
-        }
+      if (!data.hasOwnProperty(kind)) {
+        data[kind] = [media];
+      } else {
+        data[kind].push(media);
       }
     }
-    this.componentDidMount();
+    localStorage.setItem('itunes', JSON.stringify(data));
+    this.setState({ data: data });
+    
+    // if (!localStorage.getItem('itunes')) {
+    //   const newStorage = { [kind]: [] };
+    //   newStorage[kind].push(media);
+    //   localStorage.setItem('itunes', JSON.stringify(newStorage));
+    // } else {
+    //   const existingStorage = localStorage.getItem('itunes');
+    //   if (!existingStorage.includes(media.url)) {
+    //     const parsedStorage = JSON.parse(existingStorage);
+    //     if (parsedStorage[kind]) {
+    //       parsedStorage[kind].push(media);
+    //       localStorage.setItem('itunes', JSON.stringify(parsedStorage));
+    //     } else {
+    //       parsedStorage[kind] = [];
+    //       parsedStorage[kind].push(media);
+    //       localStorage.setItem('itunes', JSON.stringify(parsedStorage));
+    //     }
+    //   }
+    // }
+    // this.componentDidMount();
   };
   
   deleteLocal = (media, kind) => {
-    const localData = localStorage.getItem('itunes');
-    const parsedData = JSON.parse(localData);
-    const filtered = parsedData[kind].filter(localMedia => localMedia.url !== media.url);
-    parsedData[kind] = filtered;
-    for (let key in parsedData) {
-      if (!parsedData[key].length) {
-        delete parsedData[key]
+    const data = this.state.data;
+    if (data[kind].length === 1 && data[kind][0].url === media.url) {
+      delete data[kind];
+      localStorage.setItem('itunes', JSON.stringify(data));
+      this.setState({ data: data });
+      return;
+    }
+    for (let i = 0; i < data[kind].length; i++) {
+      if (data[kind][i].url === media.url) {
+        data[kind].splice(i, 1);
       }
     }
-    if (Object.keys(parsedData).length === 0) {
-      localStorage.clear();
-    }
-    localStorage.setItem('itunes', JSON.stringify(parsedData));
-    this.componentDidMount();
+    localStorage.setItem('itunes', JSON.stringify(data));
+    this.setState({ data: data });
+    
+    // const filtered = this.state.data[kind].filter(item => item.url !== media.url);
+    // const localData = localStorage.getItem('itunes');
+    // const parsedData = JSON.parse(localData);
+    // const filtered = parsedData[kind].filter(localMedia => localMedia.url !== media.url);
+    // parsedData[kind] = filtered;
+    // for (let key in parsedData) {
+    //   if (!parsedData[key].length) {
+    //     delete parsedData[key]
+    //   }
+    // }
+    // if (Object.keys(parsedData).length === 0) {
+    //   localStorage.clear();
+    // }
+    // localStorage.setItem('itunes', JSON.stringify(parsedData));
+    // this.componentDidMount();
   };
+  
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return JSON.stringify(nextState.data) === JSON.stringify(this.state.data);
+  }
   
   componentDidMount() {
     if (localStorage.getItem('itunes') !== null && localStorage.getItem('itunes') !== '{}') {
+      console.log('try1')
+      console.log(JSON.parse(localStorage.getItem('itunes')));
       const getLocalData = JSON.parse(localStorage.getItem('itunes'));
       const kinds = Object.keys(getLocalData);
       this.setState({ data: getLocalData, kinds: kinds });
     } else {
+      console.log('try2')
       this.setState({ data: null, kinds: null })
     }
   }
   
   render() {
-    
+    console.log(this.state.data)
     const mobile = {
         height: 'auto',
         width: 'auto',

@@ -35,10 +35,10 @@ const styles = theme => ({
 const Media = (props) => {
   
   const { classes, media, kind, saved, addData, removeData, heartStatus } = props;
-  const [heart, setHeart] = useState({
-    saved: false,
-    kind: ''
-  });
+  // const [heart, setHeart] = useState({
+  //   saved: false,
+  //   kind: ''
+  // });
   
   return (
     <Card className={classes.card}>
@@ -65,23 +65,23 @@ const Media = (props) => {
                   <DeleteOutlinedIcon style={{ zIndex: 1 }}
                                       onClick={() => removeData(media, kind)}/>
                   :
-                  heart.saved && media.hearted ?
+                  media.hearted ?
                     <SavedHeartIcon style={{ zIndex: 1, color: 'red'}}
                                     onClick={() => {
-                                      if (heart.kind === kind) {
-                                        setHeart({ saved: !heart.saved, kind: kind });
-                                        removeData(media, kind);
+                                      // if (heart.kind === kind) {
+                                      //   setHeart({ saved: !heart.saved, kind: kind });
                                         heartStatus(media.url, kind);
-                                      }
+                                        removeData(media, kind);
+                                      // }
                                     }}/>
                     :
                     <HeartIcon style={{ zIndex: 1 }}
                                onClick={() => {
-                                 if (heart.kind === '' || heart.kind === kind) {
-                                   setHeart({ saved: !heart.saved, kind: kind });
-                                   addData(media, kind);
+                                 // if (heart.kind === '' || heart.kind === kind) {
+                                 //   setHeart({ saved: !heart.saved, kind: kind });
                                    heartStatus(media.url, kind);
-                                 }
+                                   addData(media, kind);
+                                 // }
                                }}/>
               }
             </ButtonBase>
