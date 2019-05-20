@@ -11,7 +11,7 @@ const MediaTabs = Loadable({
   loading: Loading
 });
 
-const Search = ({ view, addData, removeData }) => {
+const Search = ({ view, addData, removeData, heartStatus }) => {
   
   const api = `https://itunes-catalog.herokuapp.com/api/v1/itunes/search`;
   
@@ -119,7 +119,7 @@ const Search = ({ view, addData, removeData }) => {
             data.complete &&
             <MediaTabs kinds={kinds} data={data.data}
                        addData={addData} removeData={removeData}
-                       home={false} centered/>
+                       home={false} centered heartStatus={heartStatus}/>
         }
       </div>
     </div>

@@ -20,49 +20,18 @@ class MediaTabs extends React.Component {
     super(props);
     
     this.state = {
-      value: 0,
-      data: null,
-      kinds: null
+      value: 0
     };
   }
-  
-  componentDidMount() {
-    this.setState({data: this.props.data, kinds: this.props.kinds});
-  }
-  
-  heartStatus = (id, kind) => {
-    let modified = this.state.data;
-    for (let i = 0; i < modified[kind].length; i++) {
-      if (Object.values(modified[kind][i]).includes(id)) {
-        if (!modified[kind][i].hasOwnProperty('hearted')) {
-          modified[kind][i].hearted = true;
-        } else {
-          modified[kind][i].hearted = !modified[kind][i].hearted;
-        }
-      }
-    }
-    this.setState({ data: modified })
-  };
   
   handleChange = (event, value) => {
     this.setState({ value });
   };
   
   render() {
-    const SearchNav = style => (
-      <AppBar position="static" color="default" style={style}>
-        <Tabs value={value} onChange={this.handleChange}
-              indicatorColor="primary" textColor="primary"
-              variant="scrollable" scrollButtons="auto">
-          {
-            kinds.map(kind => <Tab label={`${kind}s`} key={`${kind}`}/>)
-          }
-        </Tabs>
-      </AppBar>
-    );
-    
-    const { classes, home, addData, removeData } = this.props;
-    const { value, data, kinds } = this.state;
+
+    const { classes, home, addData, removeData, data, kinds } = this.props;
+    const { value } = this.state;
     
     const homeDesktopTabs = {
         position: 'sticky',
@@ -95,6 +64,18 @@ class MediaTabs extends React.Component {
         justifyContent: 'center',
         backgroundColor: 'rgba(250,250,250)'
       };
+  
+    const SearchNav = style => (
+      <AppBar position="static" color="default" style={style}>
+        <Tabs value={value} onChange={this.handleChange}
+              indicatorColor="primary" textColor="primary"
+              variant="scrollable" scrollButtons="auto">
+          {
+            kinds.map(kind => <Tab label={`${kind}s`} key={`${kind}`}/>)
+          }
+        </Tabs>
+      </AppBar>
+    );
     
     const Header = (bool) => bool ?
       <Responsive maxWidth={599}>
@@ -127,8 +108,7 @@ class MediaTabs extends React.Component {
                 data[kinds[value]].map((media, i) =>
                   <Media media={media} key={i}
                          kind={kinds[value]} saved={home}
-                         addData={addData} removeData={removeData}
-                         heartStatus={this.heartStatus}/>)
+                         addData={addData} removeData={removeData}/>)
                 :
                 <Typography variant="h5" align="center" color="textSecondary"
                             style={{ marginTop: 30 }}>

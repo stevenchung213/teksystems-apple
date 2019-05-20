@@ -29,6 +29,7 @@ class Main extends React.Component {
   
   saveToLocal = (media, kind) => {
     let data = this.state.data;
+    media.hearted = true;
     if (!data) {
       data = { [kind]: [media] };
     } else {
@@ -40,16 +41,17 @@ class Main extends React.Component {
     }
     localStorage.setItem('itunes', JSON.stringify(data));
     this.setState({ data: data });
-    this.componentDidMount();
   };
   
   deleteLocal = (media, kind) => {
     let data = this.state.data;
+    let kinds = this.state.kinds;
+    media.hearted = false;
     if (data[kind].length === 1 && data[kind][0].url === media.url) {
       delete data[kind];
       localStorage.setItem('itunes', JSON.stringify(data));
-      this.setState({ data: data });
-      this.componentDidMount();
+      kinds.splice(kinds.indexOf(kind), 1);
+      this.setState({ data: data, kinds: kinds });
     } else {
       for (let i = 0; i < data[kind].length; i++) {
         if (data[kind][i].url === media.url) {
