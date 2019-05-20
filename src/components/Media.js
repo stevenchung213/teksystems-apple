@@ -68,18 +68,18 @@ const Media = (props) => {
                   heart.saved ?
                     <SavedHeartIcon style={{ zIndex: 1 }}
                                     onClick={() => {
-                                      if (heart.kind === '' || heart.kind === kind) {
-                                        setHeart({saved: !heart.saved, kind: kind})
+                                      if (heart.kind === kind) {
+                                        setHeart({ saved: !heart.saved, kind: kind });
+                                        removeData(media, kind);
                                       }
-                                      removeData(media, kind)
                                     }}/>
                     :
                     <HeartIcon style={{ zIndex: 1 }}
                                onClick={() => {
-                                 if (heart.kind === '' || heart.kind === kind) {
-                                   setHeart({saved: !heart.saved, kind: kind})
+                                 if (heart.kind === '') {
+                                   setHeart({ saved: true, kind: kind });
+                                   addData(media, kind);
                                  }
-                                 addData(media, kind)
                                }}/>
               }
             </ButtonBase>

@@ -17,7 +17,7 @@ const styles = theme => ({
 
 class MediaTabs extends React.Component {
   state = {
-    value: 0,
+    value: 0
   };
   
   handleChange = (event, value) => {
@@ -38,7 +38,7 @@ class MediaTabs extends React.Component {
     );
     
     const { classes, kinds, data, home, addData, removeData } = this.props;
-    const { value } = this.state;
+    const { value, heart } = this.state;
     const homeDesktopTabs = {
         position: 'sticky',
         top: 64,
@@ -100,7 +100,7 @@ class MediaTabs extends React.Component {
             {
               data[kinds[value]] ?
                 data[kinds[value]].map((media, i) =>
-                  <Media media={media} key={`${media.track}`}
+                  <Media media={media} key={`${media.url}`}
                          kind={kinds[value]} saved={home}
                          addData={addData} removeData={removeData}/>)
                 :
