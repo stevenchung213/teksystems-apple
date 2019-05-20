@@ -34,7 +34,7 @@ const styles = theme => ({
 
 const Media = (props) => {
   
-  const { classes, media, kind, saved, addData, removeData } = props;
+  const { classes, media, kind, saved, addData, removeData, heartStatus } = props;
   const [heart, setHeart] = useState({
     saved: false,
     kind: ''
@@ -66,7 +66,7 @@ const Media = (props) => {
                                       onClick={() => removeData(media, kind)}/>
                   :
                   heart.saved ?
-                    <SavedHeartIcon style={{ zIndex: 1 }}
+                    <SavedHeartIcon style={{ zIndex: 1, color: 'red'}}
                                     onClick={() => {
                                       if (heart.kind === kind) {
                                         setHeart({ saved: !heart.saved, kind: kind });
@@ -76,8 +76,8 @@ const Media = (props) => {
                     :
                     <HeartIcon style={{ zIndex: 1 }}
                                onClick={() => {
-                                 if (heart.kind === '') {
-                                   setHeart({ saved: true, kind: kind });
+                                 if (heart.kind === '' || heart.kind === kind) {
+                                   setHeart({ saved: !heart.saved, kind: kind });
                                    addData(media, kind);
                                  }
                                }}/>
