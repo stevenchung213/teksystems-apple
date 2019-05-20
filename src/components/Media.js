@@ -35,10 +35,6 @@ const styles = theme => ({
 const Media = (props) => {
   
   const { classes, media, kind, saved, addData, removeData, heartStatus } = props;
-  // const [heart, setHeart] = useState({
-  //   saved: false,
-  //   kind: ''
-  // });
   
   return (
     <Card className={classes.card}>
@@ -66,22 +62,16 @@ const Media = (props) => {
                                       onClick={() => removeData(media, kind)}/>
                   :
                   media.hearted ?
-                    <SavedHeartIcon style={{ zIndex: 1, color: 'red'}}
+                    <SavedHeartIcon style={{ zIndex: 1, color: 'red' }}
                                     onClick={() => {
-                                      // if (heart.kind === kind) {
-                                      //   setHeart({ saved: !heart.saved, kind: kind });
-                                        heartStatus(media.url, kind);
-                                        removeData(media, kind);
-                                      // }
+                                      heartStatus(media.url, kind);
+                                      removeData(media, kind)
                                     }}/>
                     :
                     <HeartIcon style={{ zIndex: 1 }}
                                onClick={() => {
-                                 // if (heart.kind === '' || heart.kind === kind) {
-                                 //   setHeart({ saved: !heart.saved, kind: kind });
-                                   heartStatus(media.url, kind);
-                                   addData(media, kind);
-                                 // }
+                                 heartStatus(media.url, kind);
+                                 addData(media, kind)
                                }}/>
               }
             </ButtonBase>

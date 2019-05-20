@@ -26,8 +26,6 @@ class MediaTabs extends React.Component {
   }
   
   heartStatus = (id, kind) => {
-    console.log(id)
-    console.log(this.state.data);
     let modified = this.state.data;
     for (let i = 0; i < modified[kind].length; i++) {
       if (Object.values(modified[kind][i]).includes(id)) {

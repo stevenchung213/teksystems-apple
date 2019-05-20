@@ -64,19 +64,15 @@ class Main extends React.Component {
   
   componentDidMount() {
     if (localStorage.getItem('itunes') !== null && localStorage.getItem('itunes') !== '{}') {
-      console.log('try1')
-      console.log(JSON.parse(localStorage.getItem('itunes')));
       const getLocalData = JSON.parse(localStorage.getItem('itunes'));
       const kinds = Object.keys(getLocalData);
       this.setState({ data: getLocalData, kinds: kinds });
     } else {
-      console.log('try2')
       this.setState({ data: null, kinds: null })
     }
   }
   
   render() {
-    console.log(this.state.data)
     const mobile = {
         height: 'auto',
         width: 'auto',
