@@ -21,14 +21,14 @@ const Home = ({ view, data, kinds, addData, removeData }) => {
     <div id={`home-wrapper`} style={view}>
       <div id={`home-container`} style={homeContainer}>
         {
-          data === null ?
-            <Typography variant="h5" style={{ marginTop: 30, backgroundColor: '-internal-root-color' }} color="textSecondary">
-              You have no saved media...
-            </Typography>
-            :
+         !data || !kinds ?
+          <Typography variant="h5" style={{ marginTop: 30, backgroundColor: '-internal-root-color' }} color="textSecondary">
+            You have no saved media...
+          </Typography>
+          :
             <MediaTabs kinds={kinds} data={data} home
                        addData={addData} removeData={removeData}/>
-        }
+         }
       </div>
     </div>
   );

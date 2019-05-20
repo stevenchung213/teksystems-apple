@@ -24,45 +24,41 @@ class Main extends React.Component {
   
   clearLocal = () => {
     localStorage.clear();
-    this.componentDidMount();
+    this.setState({ data: null });
   };
   
   saveToLocal = (media, kind) => {
-    if (!localStorage.getItem('itunes')) {
-      const newStorage = { [kind]: [] };
-      newStorage[kind].push(media);
-      localStorage.setItem('itunes', JSON.stringify(newStorage));
+    let data = this.state.data;
+    if (!data) {
+      data = { [kind]: [media] };
     } else {
-      const existingStorage = localStorage.getItem('itunes');
-      if (!existingStorage.includes(media.url)) {
-        const parsedStorage = JSON.parse(existingStorage);
-        if (parsedStorage[kind]) {
-          parsedStorage[kind].push(media);
-          localStorage.setItem('itunes', JSON.stringify(parsedStorage));
-        } else {
-          parsedStorage[kind] = [];
-          parsedStorage[kind].push(media);
-          localStorage.setItem('itunes', JSON.stringify(parsedStorage));
-        }
+      if (!data.hasOwnProperty(kind)) {
+        data[kind] = [media];
+      } else {
+        data[kind].push(media);
       }
     }
+    localStorage.setItem('itunes', JSON.stringify(data));
+    this.setState({ data: data });
     this.componentDidMount();
   };
   
   deleteLocal = (media, kind) => {
-    const localData = localStorage.getItem('itunes');
-    const parsedData = JSON.parse(localData);
-    const filtered = parsedData[kind].filter(localMedia => localMedia.url !== media.url);
-    parsedData[kind] = filtered;
-    for (let key in parsedData) {
-      if (!parsedData[key].length) {
-        delete parsedData[key]
+    const data = this.state.data;
+    if (data[kind].length === 1 && data[kind][0].url === media.url) {
+      delete data[kind];
+      localStorage.setItem('itunes', JSON.stringify(data));
+      this.setState({ data: data });
+      this.componentDidMount();
+      return;
+    }
+    for (let i = 0; i < data[kind].length; i++) {
+      if (data[kind][i].url === media.url) {
+        data[kind].splice(i, 1);
       }
     }
-    if (Object.keys(parsedData).length === 0) {
-      localStorage.clear();
-    }
-    localStorage.setItem('itunes', JSON.stringify(parsedData));
+    localStorage.setItem('itunes', JSON.stringify(data));
+    this.setState({ data: data });
     this.componentDidMount();
   };
   
@@ -77,7 +73,6 @@ class Main extends React.Component {
   }
   
   render() {
-    
     const mobile = {
         height: 'auto',
         width: 'auto',

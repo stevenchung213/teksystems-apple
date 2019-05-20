@@ -26,8 +26,6 @@ class MediaTabs extends React.Component {
   }
   
   heartStatus = (id, kind) => {
-    console.log(id)
-    console.log(this.state.data);
     let modified = this.state.data;
     for (let i = 0; i < modified[kind].length; i++) {
       if (Object.values(modified[kind][i]).includes(id)) {
@@ -37,21 +35,7 @@ class MediaTabs extends React.Component {
           modified[kind][i].hearted = !modified[kind][i].hearted;
         }
       }
-      // if (Object.values(modified[kind][i]).includes(id) && !modified[kind][i].hearted) {
-      //   modified[kind][i].hearted = true;
-      // }
     }
-    // for (let key in modified) {
-    //   for (let i = 0; i < modified[key].length; i++) {
-    //     if (Object.values(modified[key][i]).includes(id) && modified[key][i].hearted) {
-    //       modified[key][i].hearted = false;
-    //     }
-    //     if (Object.values(modified[key][i]).includes(id) && !modified[key][i].hearted) {
-    //       modified[key][i].hearted = true;
-    //     }
-    //   }
-    // }
-    console.log(modified);
     this.setState({ data: modified })
   };
   
@@ -104,7 +88,7 @@ class MediaTabs extends React.Component {
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        backgroundColor: 'rgba(252,252,252)'
+        backgroundColor: 'rgba(250,250,250)'
       };
     
     const Header = (bool) => bool ?
