@@ -90,7 +90,7 @@ class MediaTabs extends React.Component {
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        backgroundColor: 'rgba(252,252,252)'
+        backgroundColor: 'rgba(250,250,250)'
       };
     
     const Header = (bool) => bool ?

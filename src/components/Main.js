@@ -40,7 +40,7 @@ class Main extends React.Component {
     }
     localStorage.setItem('itunes', JSON.stringify(data));
     this.setState({ data: data });
-    
+    this.componentDidMount();
     // if (!localStorage.getItem('itunes')) {
     //   const newStorage = { [kind]: [] };
     //   newStorage[kind].push(media);
@@ -68,6 +68,7 @@ class Main extends React.Component {
       delete data[kind];
       localStorage.setItem('itunes', JSON.stringify(data));
       this.setState({ data: data });
+      this.componentDidMount();
       return;
     }
     for (let i = 0; i < data[kind].length; i++) {
@@ -77,7 +78,7 @@ class Main extends React.Component {
     }
     localStorage.setItem('itunes', JSON.stringify(data));
     this.setState({ data: data });
-    
+    this.componentDidMount();
     // const filtered = this.state.data[kind].filter(item => item.url !== media.url);
     // const localData = localStorage.getItem('itunes');
     // const parsedData = JSON.parse(localData);
@@ -95,9 +96,9 @@ class Main extends React.Component {
     // this.componentDidMount();
   };
   
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return JSON.stringify(nextState.data) === JSON.stringify(this.state.data);
-  }
+  // shouldComponentUpdate(nextProps, nextState, nextContext) {
+  //   return JSON.stringify(nextState.data) === JSON.stringify(this.state.data);
+  // }
   
   componentDidMount() {
     if (localStorage.getItem('itunes') !== null && localStorage.getItem('itunes') !== '{}') {
