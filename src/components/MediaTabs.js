@@ -16,20 +16,17 @@ const styles = theme => ({
 });
 
 class MediaTabs extends React.Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      value: 0
-    };
-  }
+  
+  state = {
+    value: 0
+  };
   
   handleChange = (event, value) => {
     this.setState({ value });
   };
   
   render() {
-
+    
     const { classes, home, addData, removeData, data, kinds } = this.props;
     const { value } = this.state;
     
@@ -64,7 +61,7 @@ class MediaTabs extends React.Component {
         justifyContent: 'center',
         backgroundColor: 'rgba(250,250,250)'
       };
-  
+    
     const SearchNav = style => (
       <AppBar position="static" color="default" style={style}>
         <Tabs value={value} onChange={this.handleChange}
@@ -96,7 +93,6 @@ class MediaTabs extends React.Component {
         }
       </Responsive>;
     
-    console.log('mediatabs',data)
     return (
       Array.isArray(kinds) && kinds.length > 0 ?
         <div className={classes.root}>

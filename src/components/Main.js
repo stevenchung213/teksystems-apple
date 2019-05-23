@@ -14,13 +14,10 @@ const Search = Loadable({
 
 class Main extends React.Component {
   
-  constructor() {
-    super();
-    this.state = {
-      data: null,
-      kinds: null
-    };
-  }
+  state = {
+    data: null,
+    kinds: null
+  };
   
   clearLocal = () => {
     localStorage.clear();
@@ -40,7 +37,7 @@ class Main extends React.Component {
       }
     }
     localStorage.setItem('itunes', JSON.stringify(data));
-    this.setState({ data: data });
+    this.setState({ data: {...data} });
   };
   
   deleteLocal = (media, kind) => {
