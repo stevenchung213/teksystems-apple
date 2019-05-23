@@ -75,7 +75,6 @@ class Main extends React.Component {
   }
   
   render() {
-    console.log(this.state.data)
     const mobile = {
         height: 'auto',
         width: 'auto',
