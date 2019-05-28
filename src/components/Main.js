@@ -20,14 +20,14 @@ class Main extends React.Component {
   };
   
   clearLocal = () => {
-    localStorage.clear();
+    localStorage.removeItem('itunes');
     this.setState({ data: null });
   };
   
   saveToLocal = (media, kind) => {
     let data = this.state.data;
     media.hearted = true;
-    if (!data) {
+    if (data == null) {
       data = { [kind]: [media] };
     } else {
       if (!data.hasOwnProperty(kind)) {
